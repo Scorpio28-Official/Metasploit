@@ -1,0 +1,36 @@
+#!/bin/bash
+
+ARCHITECTURE=$(uname -m)
+THOME="/data/data/com.termux/files/home"
+TUSR="/data/data/com.termux/files/usr"
+EXECUTE=$(basename "$0")
+LOCATION="${THOME}/metasploit-framework"
+ANDROID=$(getprop ro.build.version.release)
+
+if [ ${ANDROID%%.*} -ge 7 ]; then
+VERSION="2.7.0"
+else
+VERSION="2.6.0"
+fi
+
+case "${ARCHITECTURE}" in
+	aarch64)
+		export LD_PRELOAD="${PREFIX}/lib/ruby/${VERSION}/aarch64-linux-android/bigdecimal.so:$LD_PRELOAD"
+		;;
+	arm*)
+		export LD_PRELOAD="${PREFIX}/lib/ruby/${VERSION}/arm-linux-androideabi/bigdecimal.so:$LD_PRELOAD"
+		;;
+	i686)
+		export LD_PRELOAD="${PREFIX}/lib/ruby/${VERSION}/i686-linux-android/bigdecimal.so:$LD_PRELOAD"
+		;;
+	x86_64)
+		export LD_PRELOAD="${PREFIX}/lib/ruby/${VERSION}/x86_64-linux-android/bigdecimal.so:$LD_PRELOAD"
+		;;
+	*)
+		unset LD_PRELOAD
+		;;
+esac
+
+if [[ "${EXECUTE}" == "msfconsole" || "${EXECUTE}" == "msfvenom" ]]; then
+exec ruby "${LOCATION}/${EXECUTE}" "$@"
+fi
