@@ -6,7 +6,7 @@ Es un script que nos permite auto instalar Metasploit-Framework en nuestra termi
 * [√] Termux
 # REQUISITOS
 * [-] git
-* [-] ruby
+* [-] wget
 * [-] curl
 # INSTALACIÓN
 * $ termux-setup-storage
