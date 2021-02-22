@@ -1,0 +1,4 @@
+#!/bin/bash
+
+LOCATION="/data/data/com.termux/files/usr/opt/metasploit-framework"
+exec ruby "${LOCATION}/msfvenom" "$@"
